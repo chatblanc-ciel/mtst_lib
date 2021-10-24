@@ -8,5 +8,7 @@
 
 namespace fa_default
 {
-    
+    FireFly::FireFly(std::vector<double> pos, double value, std::vector<double> vel,
+                     std::vector<double> best_pos, double best_value)
+    {}
 }
