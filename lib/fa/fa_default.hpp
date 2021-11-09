@@ -36,21 +36,21 @@ namespace fa_default
 
 		FaParam(const int, const int, const int, const double, const double, const double,
 				 const double, const double, const double, const double)
-		:T_Max(10000), Particles(100), Dimensions(100), Randomize(0.5), Attract(1.0), Absorb(0.5),
-		 Ran1_Max(1.5), Ran1_Min(-1.5), Ran2_Max(1.5), Ran2_Min(-1.5)
+		:t_max(10000), particles(100), dimensions(100), randomize(0.5), attract(1.0), absorb(0.5),
+		 ran1_Max(1.5), ran1_Min(-1.5), ran2_Max(1.5), ran2_Min(-1.5)
 		{}
 		
 		/* パラメータの定義 */
-    	int T_Max;        // 更新回数
-    	int Particles;    // 個体数
-    	int Dimensions;   // 次元数
-    	double Randomize; // ランダム性パラメータα
-    	double Attract;   // 発光地点における誘引度β
-    	double Absorb;    // 吸収係数γ
-    	double Ran1_Max;  // 初期位置のランダム生成(最大値)
-    	double Ran1_Min;  // 初期位置のランダム生成(最小値)
-    	double Ran2_Max;  // ランダム移動の範囲(最大値)
-    	double Ran2_Min;  // ランダム移動の範囲(最小値)
+    	int t_max;        // 更新回数
+    	int particles;    // 個体数
+    	int dimensions;   // 次元数
+    	double randomize; // ランダム性パラメータα
+    	double attract;   // 発光地点における誘引度β
+    	double absorb;    // 吸収係数γ
+    	double ran1_Max;  // 初期位置のランダム生成(最大値)
+    	double ran1_Min;  // 初期位置のランダム生成(最小値)
+    	double ran2_Max;  // ランダム移動の範囲(最大値)
+    	double ran2_Min;  // ランダム移動の範囲(最小値)
 	};
 
 	struct FaStrat
@@ -63,7 +63,7 @@ namespace fa_default
     	std::vector<double> init_variable;                 // 最適化開始時の最良評価値の変数
     	std::vector<std::vector<double>> update_variable;
     	double evals;                                      // 評価回数
-    	clock_t time;                                      // 1試行あたりの最適化の実行時間
+    	clock_t start_time;                                      // 1試行あたりの最適化の実行時間
     	size_t iter;                                       // 更新回数
 
 	public:
@@ -114,7 +114,7 @@ namespace fa_default
 
 		FaStrat& set_time(clock_t input)
 		{ 
-			time = input;
+			start_time = input;
 			return *this; 
 		}
 
@@ -133,7 +133,7 @@ namespace fa_default
 		size_t get_iter() const
 		{ return iter; }
 		clock_t get_time() const
-		{ return time; }
+		{ return start_time; }
 	};
 }
 
