@@ -63,7 +63,7 @@ namespace fa_default
     	std::vector<double> init_variable;                 // 最適化開始時の最良評価値の変数
     	std::vector<std::vector<double>> update_variable;
     	double evals;                                      // 評価回数
-    	clock_t start_time;                                      // 1試行あたりの最適化の実行時間
+    	clock_t start_time;                                // 1試行あたりの最適化の実行時間
     	size_t iter;                                       // 更新回数
 
 	public:
