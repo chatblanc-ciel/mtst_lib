@@ -11,6 +11,7 @@
 #include <vector>
 #include <ctime>
 #include <string>
+#include<random>
 
 namespace fa_default
 {
@@ -28,6 +29,11 @@ namespace fa_default
 
 	    std::vector<double> best_pos;
 	    double best_value;
+
+		void update();
+		void force_update();
+
+		void transfer(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(２個体間の距離)
     };
 
 	struct FaParam
@@ -37,7 +43,7 @@ namespace fa_default
 		FaParam(const int, const int, const int, const double, const double, const double,
 				 const double, const double, const double, const double)
 		:t_max(10000), particles(100), dimensions(100), randomize(0.5), attract(1.0), absorb(0.5),
-		 ran1_Max(1.5), ran1_Min(-1.5), ran2_Max(1.5), ran2_Min(-1.5)
+		 ran1_max(1.5), ran1_min(-1.5), ran2_max(1.5), ran2_min(-1.5)
 		{}
 		
 		/* パラメータの定義 */
@@ -47,10 +53,10 @@ namespace fa_default
     	double randomize; // ランダム性パラメータα
     	double attract;   // 発光地点における誘引度β
     	double absorb;    // 吸収係数γ
-    	double ran1_Max;  // 初期位置のランダム生成(最大値)
-    	double ran1_Min;  // 初期位置のランダム生成(最小値)
-    	double ran2_Max;  // ランダム移動の範囲(最大値)
-    	double ran2_Min;  // ランダム移動の範囲(最小値)
+    	double ran1_max;  // 初期位置のランダム生成(最大値)
+    	double ran1_min;  // 初期位置のランダム生成(最小値)
+    	double ran2_max;  // ランダム移動の範囲(最大値)
+    	double ran2_min;  // ランダム移動の範囲(最小値)
 	};
 
 	struct FaStrat
