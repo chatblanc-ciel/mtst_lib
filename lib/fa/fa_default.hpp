@@ -33,16 +33,27 @@ namespace fa_default
 		void update();
 		void force_update();
 
-		void transfer(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(２個体間の距離)
+		void transfer(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(二個体間の距離)
     };
 
 	struct FaParam
 	{
+	protected:
+
+    	double value;                               	   // 最良評価値
+    	std::vector<double> update_value;				   // 各更新時の最良評価値
+    	std::vector<double> variable;                      // 最良評価値の時の変数
+    	std::vector<double> init_variable;                 // 最適化開始時の最良評価値の変数
+    	std::vector<std::vector<double>> update_variable;
+    	double evals;                                      // 評価回数
+    	clock_t start_time;                                // 1試行あたりの最適化の実行時間
+    	size_t iter;                                       // 更新回数
+	
 	public:
 
 		FaParam(const int, const int, const int, const double, const double, const double,
-				 const double, const double, const double, const double)
-		:t_max(10000), particles(100), dimensions(100), randomize(0.5), attract(1.0), absorb(0.5),
+				const double, const double, const double, const double)
+		:t_max(10000), particles(100), dimensions(10), randomize(0.5), attract(1.0), absorb(0.5),
 		 ran1_max(1.5), ran1_min(-1.5), ran2_max(1.5), ran2_min(-1.5)
 		{}
 		
@@ -57,68 +68,52 @@ namespace fa_default
     	double ran1_min;  // 初期位置のランダム生成(最小値)
     	double ran2_max;  // ランダム移動の範囲(最大値)
     	double ran2_min;  // ランダム移動の範囲(最小値)
-	};
 
-	struct FaStrat
-	{
-	protected:
+		FaParam(){}	
 
-    	double value;                               	   // 最良評価値
-    	std::vector<double> update_value;				   // 各更新時の最良評価値
-    	std::vector<double> variable;                      // 最良評価値の時の変数
-    	std::vector<double> init_variable;                 // 最適化開始時の最良評価値の変数
-    	std::vector<std::vector<double>> update_variable;
-    	double evals;                                      // 評価回数
-    	clock_t start_time;                                // 1試行あたりの最適化の実行時間
-    	size_t iter;                                       // 更新回数
-
-	public:
-
-    	FaStrat(){}
-
-		FaStrat& set_value(double input)
+		FaParam& set_value(double input)
 		{
 			value = input;
 			return *this; 
 		}
 
-		FaStrat& set_update_value(std::vector<double> input)
+		FaParam& set_update_value(std::vector<double> input)
 		{ 
 			update_value = input;
 			return *this; 
 		}
 
-		FaStrat& set_variable(std::vector<double> input)
+		FaParam& set_variable(std::vector<double> input)
 		{ 
 			variable = input;
 			return *this; 
 		}  
 
-		FaStrat& set_init_variable(std::vector<double> input)
+		FaParam& set_init_variable(std::vector<double> input)
 		{ 
 			init_variable = input;
 			return *this; 
 		}  
 
-		FaStrat& set_update_variable(std::vector<std::vector<double>> input)
+		FaParam& set_update_variable(std::vector<std::vector<double>> input)
 		{ 
 			update_variable = input;
 			return *this; 
 		}
 
-		FaStrat& set_evals(double input)
+		FaParam& set_evals(double input)
 		{ 
 			evals = input;
 			return *this; 
 		}
 
-		FaStrat& set_iter(size_t input)
+		FaParam& set_iter(size_t input)
 		{ 
 			iter = input;
 			return *this; 
 		}
 
-		FaStrat& set_time(clock_t input)
+		FaParam& set_time(clock_t input)
 		{ 
 			start_time = input;
 			return *this; 
