@@ -13,7 +13,7 @@ namespace fa_default
                      std::vector<double> best_pos, double best_value)
     {}
     
-    void FireFly::update() // 更新
+    void FireFly::update() // 良い値に更新
     {
         if(best_pos > pos)
         {
@@ -22,7 +22,7 @@ namespace fa_default
         }
     }
     
-    void FireFly::force_update() // 強制更新
+    void FireFly::force_update() // 強制的に更新
     {
         best_pos = pos;
         best_value = value;
