@@ -42,7 +42,7 @@ namespace fa_default
 
 		FaParam(const int, const int, const int, const double, const double, const double,
 				 const double, const double, const double, const double)
-		:t_max(10000), particles(100), dimensions(100), randomize(0.5), attract(1.0), absorb(0.5),
+		:t_max(10000), particles(100), dimensions(10), randomize(0.5), attract(1.0), absorb(0.5),
 		 ran1_max(1.5), ran1_min(-1.5), ran2_max(1.5), ran2_min(-1.5)
 		{}
 		
