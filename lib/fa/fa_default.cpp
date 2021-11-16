@@ -39,7 +39,7 @@ namespace fa_default
 
         double attract_ff = param.attract*exp(-param.absorb*dis);
 
-        if(this->value < refer.value)
+        if(this->value > refer.value)
         {
             CellTp::zip_for_each([&]
             (double& pos, double& ref_pos, double& vel_a)
