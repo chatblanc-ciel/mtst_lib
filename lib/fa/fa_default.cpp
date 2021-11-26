@@ -34,17 +34,17 @@ namespace fa_default
 
         thread_local std::random_device rnd; // 非決定的な乱数生成器を生成
         thread_local std::mt19937 mt(rnd()); // メルセンヌ・ツイスタの32ビット版、引数は初期シード値
-        uniform_real_distribution<> init_range(param.ran1_min, param.ran1_max);
-        uniform_real_distribution<> ATTRACT_range(param.ran2_min, param.ran2_max);
+        uniform_real_distribution<> init_pos(param.get_init_pos_min(), param.get_init_pos_max());
+        uniform_real_distribution<> ran_fly(param.get_ran_fly_min(), param.get_ran_fly_max());
 
-        double attract_ff = param.attract*exp(-param.absorb*dis);
+        double attract_ff = param.get_attract()*exp(-param.get_absorb()*dis);
 
         if(this->value > refer.value)
         {
             CellTp::zip_for_each([&]
             (double& pos, double& ref_pos, double& vel_a)
             {
-                vel_a += attract_ff*(ref_pos-pos) + param.randomize*ATTRACT_range(mt);  
+                vel_a += attract_ff*(ref_pos-pos) + param.get_randomize()*ran_fly(mt);  
             },
             this->pos, refer.pos, this->vel);
         }
@@ -53,7 +53,7 @@ namespace fa_default
             CellTp::zip_for_each([&]
             (double& vel_a)
             {
-                vel_a += param.randomize*ATTRACT_range(mt);  
+                vel_a += param.get_randomize()*ran_fly(mt);  
             },
             this->vel);
         }
