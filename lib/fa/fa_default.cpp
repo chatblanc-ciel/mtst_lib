@@ -58,4 +58,17 @@ namespace fa_default
             this->vel);
         }
     }
+
+    void FaStrat::calc_dist() // 全個体間の距離の計算と保存
+    {
+        dis.clear();
+
+        for(unsigned int i = 0; i < fireflies.size(); i++)
+        {
+            for(unsigned int j = i + 1; j <fireflies.size(); j++)
+            {
+                dis.emplace_back(dist_norm(fireflies.at(i).pos, fireflies.at(j).pos));
+            }   
+        }
+    }
 }

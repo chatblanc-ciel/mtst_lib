@@ -1,0 +1,6 @@
+#IDE files
+.vscode
+.settings
+.project
+.cproject
+*.code-workspace

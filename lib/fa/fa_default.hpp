@@ -11,10 +11,12 @@
 #include <vector>
 #include <ctime>
 #include <string>
-#include<random>
+#include <random>
 
 namespace fa_default
 {
+	double dist_norm(const std::vector<double>&, const std::vector<double>&); // 距離の計算(プロトタイプ宣言)
+
 	struct FaOptimizer
 	{
 		/*
@@ -151,7 +153,14 @@ namespace fa_default
 
 	struct FaStrat
 	{
-		
+	protected:
+
+		std::vector<FireFly> fireflies;
+		std::vector<double> dis;
+	
+	public:
+
+		void calc_dist(); // calc_dist(void)...引数は省略可能
 	};
 
 	struct FaResult
