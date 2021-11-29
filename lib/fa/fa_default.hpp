@@ -53,11 +53,11 @@ namespace fa_default
     	size_t t_max;        // 更新回数
     	size_t particles;    // 個体数
     	size_t dimensions;   // 次元数
-    	double randomize; // ランダム性パラメータα
-    	double attract;   // 発光地点における誘引度β
-    	double absorb;    // 吸収係数γ
-    	double init_pos_max;  // 初期位置のランダム生成(最大値)
-    	double init_pos_min;  // 初期位置のランダム生成(最小値)
+    	double randomize;    // ランダム性パラメータα
+    	double attract;      // 発光地点における誘引度β
+    	double absorb;       // 吸収係数γ
+    	double init_pos_max; // 初期位置のランダム生成(最大値)
+    	double init_pos_min; // 初期位置のランダム生成(最小値)
     	double ran_fly_max;  // ランダム移動の範囲(最大値)
     	double ran_fly_min;  // ランダム移動の範囲(最小値)
 	
