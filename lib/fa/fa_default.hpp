@@ -42,7 +42,8 @@ namespace fa_default
 		void update();
 		void force_update();
 
-		void transfer(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(二個体間の距離)
+		void transfer(); // pos += vel
+		void modify_vel(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(二個体間の距離)
     };
 
 	struct FaParam
@@ -157,10 +158,12 @@ namespace fa_default
 
 		std::vector<FireFly> fireflies;
 		std::vector<double> dis;
+		FaParam param;
 	
 	public:
 
 		void calc_dist(); // calc_dist(void)...引数は省略可能
+		void all_fireflies_update();
 	};
 
 	struct FaResult

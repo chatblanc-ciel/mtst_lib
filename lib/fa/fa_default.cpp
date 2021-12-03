@@ -15,20 +15,20 @@ namespace fa_default
     
     void FireFly::update() // 良い値に更新
     {
-        if(best_pos > pos)
+        if(this->best_pos > this->pos)
         {
-            best_pos = pos;
-            best_value = value;
+            this->best_pos = this->pos;
+            this->best_value = this->value;
         }
     }
     
     void FireFly::force_update() // 強制的に更新
     {
-        best_pos = pos;
-        best_value = value;
+        this->best_pos = this->pos;
+        this->best_value = this->value;
     }
 
-    void FireFly::transfer(FireFly& refer, double dis, FaParam& param) // FAの更新則
+    void FireFly::modify_vel(FireFly& refer, double dis, FaParam& param) // FAの更新則
     {
         using std::uniform_real_distribution;
 
@@ -61,14 +61,29 @@ namespace fa_default
 
     void FaStrat::calc_dist() // 全個体間の距離の計算と保存
     {
-        dis.clear();
+        this->dis.clear();
 
-        for(unsigned int i = 0; i < fireflies.size(); i++)
+        for(unsigned int i = 0; i < this->fireflies.size(); i++)
         {
-            for(unsigned int j = i + 1; j <fireflies.size(); j++)
+            for(unsigned int j = i + 1; j < this->fireflies.size(); j++)
             {
-                dis.emplace_back(dist_norm(fireflies.at(i).pos, fireflies.at(j).pos));
+                this->dis.emplace_back(dist_norm(this->fireflies.at(i).pos, this->fireflies.at(j).pos));
             }   
+        }
+    }
+
+    void FaStrat::all_fireflies_update()
+    {
+        size_t index = 0;
+
+        for(unsigned int i = 0; i < this->fireflies.size(); i++)
+        {
+            for(unsigned int j = i + 1; j < this->fireflies.size(); j++)
+            {
+                this->fireflies.at(i).modify_vel(this->fireflies.at(j), this->dis.at(index), this->param);
+                this->fireflies.at(j).modify_vel(this->fireflies.at(i), this->dis.at(index), this->param);
+                index += 1;
+            }
         }
     }
 }
