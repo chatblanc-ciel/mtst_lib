@@ -58,7 +58,8 @@ add_subdirectory(lib)
 # libraries
 add_library(${PROJECT_NAME} INTERFACE)
     target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-pso)
-    target_link_libraries(${PROJECT_NAME} INTERFACE "${PROJECT_NAME}-common")
+    target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-common)
+    target_link_libraries(${PROJECT_NAME} INTERFACE ${PROJECT_NAME}-fa)
 
 # for development executable(optional activate)
 option(DEVELOP_EXECUTABLE_${PROJECT_NAME} "Build develop executable file on ProjectName package" OFF)
