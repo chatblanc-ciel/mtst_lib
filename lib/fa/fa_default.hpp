@@ -42,7 +42,7 @@ namespace fa_default
 		void update();
 		void force_update();
 
-		void transfer(); // pos += vel
+		void transfer();
 		void modify_vel(FireFly&, double, FaParam&); // FireFly&...一個体の情報、double...dis(二個体間の距離)
     };
 

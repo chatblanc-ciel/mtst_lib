@@ -59,6 +59,16 @@ namespace fa_default
         }
     }
 
+    void FireFly::transfer()
+    {
+        CellTp::zip_for_each([&]
+        (double& pos_a, double& vel_a)
+        {
+            pos_a += vel_a;  
+        },
+        this->pos, this->vel);
+    }
+
     void FaStrat::calc_dist() // 全個体間の距離の計算と保存
     {
         this->dis.clear();
