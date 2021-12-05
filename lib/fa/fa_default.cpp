@@ -42,18 +42,18 @@ namespace fa_default
         if(this->value > refer.value)
         {
             CellTp::zip_for_each([&]
-            (double& pos, double& ref_pos, double& vel_a)
+            (double& pos, double& ref_pos, double& vel)
             {
-                vel_a += attract_ff*(ref_pos-pos) + param.get_randomize()*ran_fly(mt);  
+                vel += attract_ff*(ref_pos-pos) + param.get_randomize()*ran_fly(mt);  
             },
             this->pos, refer.pos, this->vel);
         }
         else
         {
             CellTp::zip_for_each([&]
-            (double& vel_a)
+            (double& vel)
             {
-                vel_a += param.get_randomize()*ran_fly(mt);  
+                vel += param.get_randomize()*ran_fly(mt);  
             },
             this->vel);
         }
@@ -62,9 +62,9 @@ namespace fa_default
     void FireFly::transfer()
     {
         CellTp::zip_for_each([&]
-        (double& pos_a, double& vel_a)
+        (double& pos, double& vel)
         {
-            pos_a += vel_a;  
+            pos += vel;  
         },
         this->pos, this->vel);
     }
