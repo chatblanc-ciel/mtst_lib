@@ -14,11 +14,10 @@
 #include <random>
 #include <string>
 #include <vector>
-
+namespace mtst{
 namespace firefly_algorithm
 {
-    namespace fa_default
-    {
+
         double dist_norm( const std::vector< double >&, const std::vector< double >& );    // 距離の計算(プロトタイプ宣言)
 
         struct FaParam
@@ -26,249 +25,127 @@ namespace firefly_algorithm
         protected:
 
             /* パラメータの定義 */
-            std::size_t t_max;         // 更新回数
-            std::size_t particles;     // 個体数
-            std::size_t dimensions;    // 次元数
-            double randomize;          // ランダム性パラメータα
-            double attract;            // 発光地点における誘引度β
-            double absorb;             // 吸収係数γ
-            double init_pos_max;       // 初期位置のランダム生成(最大値)
-            double init_pos_min;       // 初期位置のランダム生成(最小値)
-            double ran_fly_max;        // ランダム移動の範囲(最大値)
-            double ran_fly_min;        // ランダム移動の範囲(最小値)
+            std::size_t t_max_;         // 更新回数
+            std::size_t particles_;     // 個体数
+            std::size_t dimensions_;    // 次元数
+            double randomize_;          // ランダム性パラメータα
+            double attract_;            // 発光地点における誘引度β
+            double absorb_;             // 吸収係数γ
+            double init_pos_max_;       // 初期位置のランダム生成(最大値)
+            double init_pos_min_;       // 初期位置のランダム生成(最小値)
+            double ran_fly_max_;        // ランダム移動の範囲(最大値)
+            double ran_fly_min_;        // ランダム移動の範囲(最小値)
 
         public:
 
             FaParam()
-                : t_max( 10000 ), particles( 100 ), dimensions( 10 ), randomize( 0.5 ), attract( 1.0 ), absorb( 0.5 ),
-                  init_pos_max( 1.5 ), init_pos_min( -1.5 ), ran_fly_max( 0.5 ), ran_fly_min( -0.5 )
+                : t_max_( 10000 ), particles_( 100 ), dimensions_( 10 ),
+                  randomize_( 0.5 ), attract_( 1.0 ), absorb_( 0.5 ),
+                  init_pos_max_( 1.5 ), init_pos_min_( -1.5 ), ran_fly_max_( 0.5 ), ran_fly_min_( -0.5 )
             {}
 
-            std::size_t get_t_max() const
+            std::size_t t_max() const
             {
-                return this->t_max;
+                return this->t_max_;
             }
-            std::size_t get_particles() const
+            std::size_t particles() const
             {
-                return this->particles;
+                return this->particles_;
             }
-            std::size_t get_dimensions() const
+            std::size_t dimensions() const
             {
-                return this->dimensions;
+                return this->dimensions_;
             }
-            double get_randomize() const
+            double randomize() const
             {
-                return this->randomize;
+                return this->randomize_;
             }
-            double get_attract() const
+            double attract() const
             {
-                return this->attract;
+                return this->attract_;
             }
-            double get_absorb() const
+            double absorb() const
             {
-                return this->absorb;
+                return this->absorb_;
             }
-            double get_init_pos_max() const
+            double init_pos_max() const
             {
-                return this->init_pos_max;
+                return this->init_pos_max_;
             }
-            double get_init_pos_min() const
+            double init_pos_min() const
             {
-                return this->init_pos_min;
+                return this->init_pos_min_;
             }
-            double get_ran_fly_max() const
+            double ran_fly_max() const
             {
-                return this->ran_fly_max;
+                return this->ran_fly_max_;
             }
-            double get_ran_fly_min() const
+            double ran_fly_min() const
             {
-                return this->ran_fly_min;
+                return this->ran_fly_min_;
             }
 
             FaParam& set_t_max( std::size_t input )
             {
-                t_max = input;
+                t_max_ = input;
                 return *this;
             }
 
             FaParam& set_particles( std::size_t input )
             {
-                particles = input;
+                particles_ = input;
                 return *this;
             }
 
             FaParam& set_dimensions( std::size_t input )
             {
-                dimensions = input;
+                dimensions_ = input;
                 return *this;
             }
 
             FaParam& set_randomize( double input )
             {
-                randomize = input;
+                randomize_ = input;
                 return *this;
             }
 
             FaParam& set_attract( double input )
             {
-                attract = input;
+                attract_ = input;
                 return *this;
             }
 
             FaParam& set_absorb( double input )
             {
-                absorb = input;
+                absorb_ = input;
                 return *this;
             }
 
             FaParam& set_init_pos_max( double input )
             {
-                init_pos_max = input;
+                init_pos_max_ = input;
                 return *this;
             }
 
             FaParam& set_init_pos_min( double input )
             {
-                init_pos_min = input;
+                init_pos_min_ = input;
                 return *this;
             }
 
             FaParam& set_ran_fly_max( double input )
             {
-                ran_fly_max = input;
+                ran_fly_max_ = input;
                 return *this;
             }
 
             FaParam& set_ran_fly_min( double input )
             {
-                ran_fly_min = input;
+                ran_fly_min_ = input;
                 return *this;
             }
         };
-        struct FaParam
-        {
-        protected:
 
-            /* パラメータの定義 */
-            std::size_t t_max;         // 更新回数
-            std::size_t particles;     // 個体数
-            std::size_t dimensions;    // 次元数
-            double randomize;          // ランダム性パラメータα
-            double attract;            // 発光地点における誘引度β
-            double absorb;             // 吸収係数γ
-            double init_pos_max;       // 初期位置のランダム生成(最大値)
-            double init_pos_min;       // 初期位置のランダム生成(最小値)
-            double ran_fly_max;        // ランダム移動の範囲(最大値)
-            double ran_fly_min;        // ランダム移動の範囲(最小値)
-
-        public:
-
-            FaParam()
-                : t_max( 10000 ), particles( 100 ), dimensions( 10 ), randomize( 0.5 ), attract( 1.0 ), absorb( 0.5 ),
-                  init_pos_max( 1.5 ), init_pos_min( -1.5 ), ran_fly_max( 0.5 ), ran_fly_min( -0.5 )
-            {}
-
-            std::size_t get_t_max() const
-            {
-                return this->t_max;
-            }
-            std::size_t get_particles() const
-            {
-                return this->particles;
-            }
-            std::size_t get_dimensions() const
-            {
-                return this->dimensions;
-            }
-            double get_randomize() const
-            {
-                return this->randomize;
-            }
-            double get_attract() const
-            {
-                return this->attract;
-            }
-            double get_absorb() const
-            {
-                return this->absorb;
-            }
-            double get_init_pos_max() const
-            {
-                return this->init_pos_max;
-            }
-            double get_init_pos_min() const
-            {
-                return this->init_pos_min;
-            }
-            double get_ran_fly_max() const
-            {
-                return this->ran_fly_max;
-            }
-            double get_ran_fly_min() const
-            {
-                return this->ran_fly_min;
-            }
-
-            FaParam& set_t_max( std::size_t input )
-            {
-                t_max = input;
-                return *this;
-            }
-
-            FaParam& set_particles( std::size_t input )
-            {
-                particles = input;
-                return *this;
-            }
-
-            FaParam& set_dimensions( std::size_t input )
-            {
-                dimensions = input;
-                return *this;
-            }
-
-            FaParam& set_randomize( double input )
-            {
-                randomize = input;
-                return *this;
-            }
-
-            FaParam& set_attract( double input )
-            {
-                attract = input;
-                return *this;
-            }
-
-            FaParam& set_absorb( double input )
-            {
-                absorb = input;
-                return *this;
-            }
-
-            FaParam& set_init_pos_max( double input )
-            {
-                init_pos_max = input;
-                return *this;
-            }
-
-            FaParam& set_init_pos_min( double input )
-            {
-                init_pos_min = input;
-                return *this;
-            }
-
-            FaParam& set_ran_fly_max( double input )
-            {
-                ran_fly_max = input;
-                return *this;
-            }
-
-            FaParam& set_ran_fly_min( double input )
-            {
-                ran_fly_min = input;
-                return *this;
-            }
-        };
         struct FireFly
         {
         protected:
@@ -332,8 +209,8 @@ namespace firefly_algorithm
                 return *this;
             }
 
-            void update();
-            void force_update();
+            void update();    // 良い値に更新
+            void force_update();    // 強制的に更新
 
             void transfer();
             void modify_vel( FireFly&, double, FaParam& );    // FireFly&...一個体の情報、double...dis(二個体間の距離)
@@ -343,30 +220,31 @@ namespace firefly_algorithm
         {
         protected:
 
-            std::vector< double > dis;
-            FaParam param;
+            FaParam param_;
+            std::vector< double > dis_;
 
             // 内部パラメータ
-            std::vector< FireFly > fireflies;
+            std::vector< FireFly > fireflies_;
 
         public:
 
             void calc_dist();    // calc_dist(void)...引数は省略可能
-            void all_fireflies_update();
+            void all_fireflies_modify(); // 全個体の速度更新
+            void update();    // 群のアップデート
         };
 
         struct FaResult
         {
         protected:
 
-            double value;                           // 最良評価値
-            std::vector< double > update_value;     // 各更新時の最良評価値
-            std::vector< double > variable;         // 最良評価値の時の変数
-            std::vector< double > init_variable;    // 最適化開始時の最良評価値の変数
-            std::vector< std::vector< double > > update_variable;
-            std::size_t evals;          // 評価回数
-            std::clock_t start_time;    // 1試行あたりの最適化の実行時間
-            std::size_t iter;
+            double value_;                                            // 最良評価値
+            std::vector< double > update_value_;                      // 更新曲線
+            std::vector< double > variable_;                          // 最良評価値の時の変数
+            std::vector< double > init_variable_;                     // 最適化開始時の最良評価値の変数
+            std::vector< std::vector< double > > update_variable_;    // 変数の更新履歴
+            std::size_t evals_;                                       // 評価回数
+            std::clock_t start_time_;                                 // 1試行あたりの最適化の実行時間
+            std::size_t iter_;                                        // 更新回数
 
         public:
 
@@ -374,89 +252,89 @@ namespace firefly_algorithm
 
             FaResult& set_value( double input )
             {
-                value = input;
+                value_ = input;
                 return *this;
             }
 
             FaResult& set_update_value( std::vector< double > input )
             {
-                update_value = input;
+                update_value_ = input;
                 return *this;
             }
 
             FaResult& set_variable( std::vector< double > input )
             {
-                variable = input;
+                variable_ = input;
                 return *this;
             }
 
             FaResult& set_init_variable( std::vector< double > input )
             {
-                init_variable = input;
+                init_variable_ = input;
                 return *this;
             }
 
             FaResult& set_update_variable( std::vector< std::vector< double > > input )
             {
-                update_variable = input;
+                update_variable_ = input;
                 return *this;
             }
 
             FaResult& set_evals( std::size_t input )
             {
-                evals = input;
+                evals_ = input;
                 return *this;
             }
 
             FaResult& set_iter( std::size_t input )
             {
-                iter = input;
+                iter_ = input;
                 return *this;
             }
 
             FaResult& set_time( std::clock_t input )
             {
-                start_time = input;
+                start_time_ = input;
                 return *this;
             }
 
             FaResult& set_time( double input )
             {
-                start_time = static_cast< std::clock_t >( input );
+                start_time_ = static_cast< std::clock_t >( input );
                 return *this;
             }
 
-            double get_value() const
+            double value() const
             {
-                return value;
+                return value_;
             }
-            std::vector< double > get_update_value() const
+            std::vector< double > update_value() const
             {
-                return update_value;
+                return update_value_;
             }
-            std::vector< double > get_variable() const
+            std::vector< double > variable() const
             {
-                return variable;
+                return variable_;
             }
-            std::vector< double > get_init_variable() const
+            std::vector< double > init_variable() const
             {
-                return init_variable;
+                return init_variable_;
             }
-            std::vector< std::vector< double > > get_update_variable() const
+            std::vector< std::vector< double > > update_variable() const
             {
-                return update_variable;
+                return update_variable_;
             }
-            std::size_t get_evals() const
+            std::size_t evals() const
             {
-                return evals;
+                return evals_;
             }
-            std::size_t get_iter() const
+            std::size_t iter() const
             {
-                return iter;
+                return iter_;
             }
-            std::clock_t get_time() const
+            std::clock_t time() const
             {
-                return start_time;
+                return start_time_;
             }
         };
 
@@ -472,7 +350,7 @@ namespace firefly_algorithm
             FaOptimizer( FaParam parameter ): param( parameter ) {}
             virtual ~FaOptimizer() {}
         };
-    }    // namespace fa_default
 }    // namespace firefly_algorithm
+}
 
 #endif /* FA_DEFAULT_HPP_ */
