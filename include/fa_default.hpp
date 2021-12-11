@@ -352,7 +352,8 @@ namespace firefly_algorithm
         public:
 
             void calc_dist();    // calc_dist(void)...引数は省略可能
-            void all_fireflies_update();
+            void all_fireflies_modify();
+            void update();    // 群のアップデート
         };
 
         struct FaResult
