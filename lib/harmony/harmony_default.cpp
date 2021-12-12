@@ -222,7 +222,7 @@ namespace harmony_search
 
         // Explicit Instantiation
         // テンプレート組み合わせ宣言
-        template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult >;
+        template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy >;
 
     }    // namespace hs_default
 }    // namespace harmony_search
