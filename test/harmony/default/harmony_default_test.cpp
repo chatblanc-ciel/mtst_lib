@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-
 using namespace std;
 
 void run_HarmonyOptimizer_optimize();
