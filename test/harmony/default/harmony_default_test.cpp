@@ -1,10 +1,9 @@
-#include "harmony_default.hpp"
+#include "harmony/harmony_default.hpp"
 
 #include <cassert>
 #include <cstdio>
 #include <string>
 #include <vector>
-
 
 using namespace std;
 
@@ -80,7 +79,7 @@ void run_HarmonyOptimizer_optimize()
         return value;
     };
 
-    HarmonyOptimizer optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
+    HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult > optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
     auto result = optimizer.optimize( 10, obj_func );
 
     printf( "value %.15f\n", result.value() );

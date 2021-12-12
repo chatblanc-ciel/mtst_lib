@@ -8,6 +8,8 @@
 #ifndef INCLUDE_HARMONY_DEFAULT_HPP_
 #define INCLUDE_HARMONY_DEFAULT_HPP_
 
+#include "common.hpp"
+
 #include <algorithm>
 #include <chrono>
 #include <functional>
@@ -19,6 +21,18 @@ namespace harmony_search
 {
     namespace hs_default
     {
+        /* # String format function
+         *
+         */
+        template< typename... Args >
+        std::string format( const std::string& fmt, Args... args )
+        {
+            std::size_t len = static_cast< std::size_t >( snprintf( nullptr, 0, fmt.c_str(), args... ) );
+            std::vector< char > buf( len + 1 );
+            snprintf( &buf[0], len + 1, fmt.c_str(), args... );
+            return std::string( &buf[0], &buf[0] + len );
+        }
+
         struct Harmony
         {
         protected:
@@ -186,129 +200,110 @@ namespace harmony_search
             static std::vector< double > gen_rng_vals( std::size_t, double );
         };
 
-        struct HarmonyResult
+        struct HarmonyResult: mtst_common::result::TraitResult
         {
         protected:
 
-            double value_;                                            // 最良評価値
-            std::vector< double > update_value_;                      // 更新曲線
-            std::vector< double > variable_;                          // 最良評価値の時の変数
-            std::vector< double > init_variable_;                     // 最適化開始時の最良評価値の変数
-            std::vector< std::vector< double > > update_variable_;    // 変数の更新履歴
-            std::size_t evals_;                                       // 評価回数
-            std::clock_t time_;                                       // 1試行あたりの最適化の実行時間
-            std::size_t iter_;                                        // 更新回数
+            // double value_;                                            // 最良評価値
+            // std::vector< double > update_value_;                      // 更新曲線
+            // std::vector< double > variable_;                          // 最良評価値の時の変数
+            // std::vector< double > init_variable_;                     // 最適化開始時の最良評価値の変数
+            // std::vector< std::vector< double > > update_variable_;    // 変数の更新履歴
+            // std::size_t evals_;                                       // 評価回数
+            // std::clock_t time_;                                       // 1試行あたりの最適化の実行時間
+            // std::size_t iter_;                                        // 更新回数
 
         public:
 
             HarmonyResult() {}
 
-            HarmonyResult& set_value( double input )
+            std::string csv_header() const override
             {
-                value_ = input;
-                return *this;
+                return std::string( "Value,Evals,Iter,Time[ms]" );
             }
 
-            HarmonyResult& set_update_value( std::vector< double > input )
+            std::string csv_data() const override
             {
-                update_value_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_variable( std::vector< double > input )
-            {
-                variable_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_init_variable( std::vector< double > input )
-            {
-                init_variable_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_update_variable( std::vector< std::vector< double > > input )
-            {
-                update_variable_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_evals( std::size_t input )
-            {
-                evals_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_iter( size_t input )
-            {
-                iter_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_time( std::clock_t input )
-            {
-                time_ = input;
-                return *this;
-            }
-
-            HarmonyResult& set_time( double input )
-            {
-                time_ = static_cast< std::clock_t >( input );
-                return *this;
-            }
-
-            double value() const
-            {
-                return value_;
-            }
-            std::vector< double > update_value() const
-            {
-                return update_value_;
-            }
-            std::vector< double > variable() const
-            {
-                return variable_;
-            }
-            std::vector< double > init_variable() const
-            {
-                return init_variable_;
-            }
-            std::vector< std::vector< double > > update_variable() const
-            {
-                return update_variable_;
-            }
-            std::size_t evals() const
-            {
-                return evals_;
-            }
-            std::clock_t time() const
-            {
-                return time_;
-            }
-            size_t iter() const
-            {
-                return iter_;
+                return format( "%.15f,%lu,%lu,%.15f", this->value_, static_cast< long unsigned int >( this->evals_ ), static_cast< long unsigned int >( this->iter_ ), static_cast< double >( this->time_ ) );
             }
         };
 
-        struct HarmonyOptimizer
+        template< class P = HarmonySearchParameter, class S = HarmonySearchStrategy, class R = HarmonyResult >
+        struct HarmonyOptimizer: mtst_common::optimizer::TraitOptimizer< R >
         {
         protected:
 
-            HarmonySearchParameter param_;
+            P param_;
 
         public:
 
             HarmonyOptimizer() {}
-            HarmonyOptimizer( HarmonySearchParameter param ): param_( param ) {}
+            HarmonyOptimizer( P param ): param_( param ) {}
             virtual ~HarmonyOptimizer() {}
 
-            virtual HarmonyResult optimize( std::size_t, std::function< double( std::vector< double >& ) > );
+            virtual R optimize( std::size_t, std::function< double( std::vector< double >& ) > ) override;
 
-            virtual void initialize() {}
-            virtual void pre_act() {}
-            virtual void post_act() {}
+            virtual void initialize() override {}
+            virtual void pre_act() override {}
+            virtual void post_act() override {}
+            virtual void finalize() override {}
         };
+
+        template< class P, class S, class R >
+        R HarmonyOptimizer< P, S, R >::optimize( std::size_t dim, std::function< double( std::vector< double >& ) > obj_func )
+        {
+            using std::clock_t;
+            using std::vector;
+
+            // 実行時間計測開始
+            clock_t start = clock();
+
+            // 初期化アクション
+            this->initialize();
+            S strat( this->param_, dim, obj_func );
+
+            // 結果記録用
+            vector< double > update_curve;
+            update_curve.reserve( strat.param_ref().max_evals() );
+
+            for ( std::size_t t = 0, m_evals = strat.param_ref().max_evals(); t < m_evals; ++t )
+            {
+                // 更新前アクション
+                this->pre_act();
+
+                // 新しいハーモニーの生成
+                auto new_harmony = strat.generate_harmony();
+
+                //ハーモニーメモリ内の評価値と比較して最悪ハーモニーより良ければハーモニーを入れ替える
+                strat.trade_harmony( new_harmony );
+
+                // 探索履歴の保存
+                std::size_t best_index = strat.best_harmony();
+                update_curve.emplace_back( strat.harmonies_ref().at( best_index ).value() );
+
+                // 更新後アクション
+                this->post_act();
+            }
+
+            this->finalize();
+
+            // 実行時間計測終了
+            clock_t end = clock();
+
+
+            R result;
+
+            std::size_t best_index = strat.best_harmony();
+            result
+                .set_value( strat.harmonies_ref().at( best_index ).value() )
+                .set_variable( strat.harmonies_ref().at( best_index ).harmony() )
+                .set_time( end - start )
+                .set_update_value( update_curve )
+                .set_evals( strat.param_ref().max_evals() + strat.param_ref().harmony_size() );
+
+            return result;
+        }
+
     }    // namespace hs_default
 }    // namespace harmony_search
 
