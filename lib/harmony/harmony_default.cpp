@@ -168,6 +168,5 @@ namespace harmony_search
         // テンプレート組み合わせ宣言
         template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult >;
 
-
     }    // namespace hs_default
 }    // namespace harmony_search
