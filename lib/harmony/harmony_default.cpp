@@ -5,7 +5,7 @@
  *      Author: matsu
  */
 
-#include "harmony_default.hpp"
+#include "harmony/harmony_default.hpp"
 
 namespace harmony_search
 {
@@ -164,7 +164,8 @@ namespace harmony_search
             return vals;
         }
 
-        HarmonyResult HarmonyOptimizer::optimize( std::size_t dim, std::function< double( std::vector< double >& ) > obj_func )
+        template< class P, class S >
+        HarmonyResult HarmonyOptimizer< P, S >::optimize( std::size_t dim, std::function< double( std::vector< double >& ) > obj_func )
         {
             using std::clock_t;
             using std::vector;
@@ -174,7 +175,7 @@ namespace harmony_search
 
             // 初期化アクション
             this->initialize();
-            HarmonySearchStrategy strat( this->param_, dim, obj_func );
+            S strat( this->param_, dim, obj_func );
 
             // 結果記録用
             vector< double > update_curve;
@@ -199,8 +200,11 @@ namespace harmony_search
                 this->post_act();
             }
 
+            this->finalize();
+
             // 実行時間計測終了
             clock_t end = clock();
+
 
             HarmonyResult result;
 
@@ -214,5 +218,11 @@ namespace harmony_search
 
             return result;
         }
+
+        // Explicit Instantiation
+        // テンプレート組み合わせ宣言
+        template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy >;
+
+
     }    // namespace hs_default
 }    // namespace harmony_search
