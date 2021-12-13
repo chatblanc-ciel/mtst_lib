@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 add_subdirectory(default)
+add_subdirectory(gbest_guide)
 
 
 # if you want to add test and test executable.
