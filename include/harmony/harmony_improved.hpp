@@ -34,9 +34,11 @@ namespace harmony_search
 
             HarmonyImprovedParameter()
                 : HarmonySearchParameter(),
-                  band_width_0_( 0.1 ), band_width_t_( 0.001 ),
-                  adjustment_ratio_0_( 0.99 ), adjustment_ratio_t_( 0.01 )
-            {}
+                  band_width_0_( 0.1 ), band_width_t_( 0.001 ), bw_update_ratio_( 0.0 ),
+                  adjustment_ratio_0_( 0.99 ), adjustment_ratio_t_( 0.01 ), ar_update_ratio_( 0.0 )
+            {
+                this->configure_update_ratio();
+            }
 
             double band_width_0() const
             {
@@ -73,11 +75,19 @@ namespace harmony_search
                 this->band_width_0_ = input;
                 return *this;
             }
-            HarmonyImprovedParameter& set_bw_update_ratio( double input )
+            HarmonyImprovedParameter& set_adjustment_ratio_0( double input )
             {
-                this->band_width_0_ = input;
+                this->adjustment_ratio_0_ = input;
                 return *this;
             }
+            HarmonyImprovedParameter& set_adjustment_ratio_t( double input )
+            {
+                this->adjustment_ratio_t_ = input;
+                return *this;
+            }
+
+            virtual HarmonyImprovedParameter& configure_update_ratio();
+            virtual void update_parameter( std::size_t evals );
         }
     }    // namespace hs_improved
 }    // namespace harmony_search
