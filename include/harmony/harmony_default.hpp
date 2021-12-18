@@ -146,6 +146,7 @@ namespace harmony_search
 
         public:
 
+            virtual void initialize() {}
             HarmonySearchStrategy( HarmonySearchParameter, std::size_t, std::function< double( std::vector< double >& ) > );
             HarmonySearchStrategy(
                 HarmonySearchParameter,
@@ -261,6 +262,7 @@ namespace harmony_search
             // 初期化アクション
             this->initialize();
             S strat( this->param_, dim, obj_func );
+            strat.initialize();
 
             // 結果記録用
             vector< double > update_curve;
