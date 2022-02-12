@@ -6,7 +6,6 @@
 #include <vector>
 
 using namespace std;
-using namespace mtst;
 
 void run_HarmonyOptimizer_optimize();
 void test_HarmonySearchStrategy_detection_best_worst();
@@ -66,7 +65,7 @@ double sphere( const vector< double >& x )
  */
 void run_HarmonyOptimizer_optimize()
 {
-    using namespace harmony_search;
+    using namespace harmony_search::hs_default;
 
     auto obj_func = []( const vector< double > x ) -> double
     {
@@ -80,7 +79,7 @@ void run_HarmonyOptimizer_optimize()
         return value;
     };
 
-    HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy > optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
+    HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult > optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
     auto result = optimizer.optimize( 10, obj_func );
 
     printf( "value %.15f\n", result.value() );
@@ -96,7 +95,7 @@ void run_HarmonyOptimizer_optimize()
 void test_HarmonySearchStrategy_detection_best_worst()
 {
     using std::vector;
-    using namespace harmony_search;
+    using namespace harmony_search::hs_default;
 
     // genereate defintive hamonies
     vector< Harmony > harmonies {
@@ -160,7 +159,7 @@ void test_HarmonySearchStrategy_detection_best_worst()
 void test_HarmonySearchStrategy_trade_harmony()
 {
     using std::vector;
-    using namespace harmony_search;
+    using namespace harmony_search::hs_default;
     const unsigned int acc = 1000;    // 10^-n(小数点以下n桁)まで精度を検査
 
 
@@ -260,7 +259,7 @@ void test_HarmonySearchStrategy_trade_harmony()
  */
 void run_HarmonySearchStrategy_gen_rng_vals()
 {
-    using namespace harmony_search;
+    using namespace harmony_search::hs_default;
 
     printf( "\ndefault geneartion\n" );
     for ( size_t i = 0; i < 10; ++i )
@@ -287,7 +286,7 @@ void run_HarmonySearchStrategy_gen_rng_vals()
 
 void run_HarmonySearchStrategy_generate_harmony_function()
 {
-    using namespace harmony_search;
+    using namespace harmony_search::hs_default;
 
     HarmonySearchStrategy strat( HarmonySearchParameter().set_max_evals( 3000 ), 3, sphere );
 

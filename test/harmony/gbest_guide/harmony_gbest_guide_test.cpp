@@ -7,7 +7,6 @@
 
 
 using namespace std;
-using namespace mtst;
 
 void run_HarmonyGbestGuideStrategy_constract();
 
@@ -43,7 +42,7 @@ double sphere( const vector< double >& x )
 
 void run_HarmonyGbestGuideStrategy_constract()
 {
-    using namespace harmony_search;
+    using namespace harmony_search::hs_gbest_guide;
 
     // generate HarmonyStrategy
     auto strat = HarmonyGbestGuideStrategy(

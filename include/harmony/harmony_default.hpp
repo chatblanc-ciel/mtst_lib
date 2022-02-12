@@ -17,9 +17,9 @@
 #include <string>
 #include <vector>
 
-namespace mtst
+namespace harmony_search
 {
-    namespace harmony_search
+    namespace hs_default
     {
         /* # String format function
          *
@@ -228,8 +228,8 @@ namespace mtst
             }
         };
 
-        template< class P = HarmonySearchParameter, class S = HarmonySearchStrategy >
-        struct HarmonyOptimizer: mtst_common::optimizer::TraitOptimizer< HarmonyResult >
+        template< class P = HarmonySearchParameter, class S = HarmonySearchStrategy, class R = HarmonyResult >
+        struct HarmonyOptimizer: mtst_common::optimizer::TraitOptimizer< R >
         {
         protected:
 
@@ -241,15 +241,71 @@ namespace mtst
             HarmonyOptimizer( P param ): param_( param ) {}
             virtual ~HarmonyOptimizer() {}
 
-            virtual HarmonyResult optimize( std::size_t, std::function< double( std::vector< double >& ) > ) override;
+            virtual R optimize( std::size_t, std::function< double( std::vector< double >& ) > ) override;
 
             virtual void initialize() override {}
             virtual void pre_act() override {}
             virtual void post_act() override {}
             virtual void finalize() override {}
         };
-    }    // namespace harmony_search
-}    // namespace mtst
+
+        template< class P, class S, class R >
+        R HarmonyOptimizer< P, S, R >::optimize( std::size_t dim, std::function< double( std::vector< double >& ) > obj_func )
+        {
+            using std::clock_t;
+            using std::vector;
+
+            // 実行時間計測開始
+            clock_t start = clock();
+
+            // 初期化アクション
+            this->initialize();
+            S strat( this->param_, dim, obj_func );
+
+            // 結果記録用
+            vector< double > update_curve;
+            update_curve.reserve( strat.param_ref().max_evals() );
+
+            for ( std::size_t t = 0, m_evals = strat.param_ref().max_evals(); t < m_evals; ++t )
+            {
+                // 更新前アクション
+                this->pre_act();
+
+                // 新しいハーモニーの生成
+                auto new_harmony = strat.generate_harmony();
+
+                //ハーモニーメモリ内の評価値と比較して最悪ハーモニーより良ければハーモニーを入れ替える
+                strat.trade_harmony( new_harmony );
+
+                // 探索履歴の保存
+                std::size_t best_index = strat.best_harmony();
+                update_curve.emplace_back( strat.harmonies_ref().at( best_index ).value() );
+
+                // 更新後アクション
+                this->post_act();
+            }
+
+            this->finalize();
+
+            // 実行時間計測終了
+            clock_t end = clock();
+
+
+            R result;
+
+            std::size_t best_index = strat.best_harmony();
+            result
+                .set_value( strat.harmonies_ref().at( best_index ).value() )
+                .set_variable( strat.harmonies_ref().at( best_index ).harmony() )
+                .set_time( end - start )
+                .set_update_value( update_curve )
+                .set_evals( strat.param_ref().max_evals() + strat.param_ref().harmony_size() );
+
+            return result;
+        }
+
+    }    // namespace hs_default
+}    // namespace harmony_search
 
 
 #endif /* INCLUDE_HARMONY_DEFAULT_HPP_ */

@@ -6,13 +6,18 @@
  */
 
 #include "harmony/harmony_gbest_guide.hpp"
-namespace mtst
+
+namespace harmony_search
 {
-    namespace harmony_search
-    {
-        // Explicit Instantiation
+    namespace hs_default
+    {    // Explicit Instantiation
         // テンプレート組み合わせ宣言
-        template struct HarmonyOptimizer< HarmonySearchParameter, HarmonyGbestGuideStrategy >;
+        template struct HarmonyOptimizer< HarmonySearchParameter, hs_gbest_guide::HarmonyGbestGuideStrategy >;
+    }    // namespace hs_default
+
+    namespace hs_gbest_guide
+    {
+        using namespace hs_default;
 
         Harmony HarmonyGbestGuideStrategy::generate_tuning_harmony( const std::size_t index ) const
         {
@@ -48,5 +53,5 @@ namespace mtst
         // テンプレート組み合わせ宣言
         template struct HarmonyGbestGuideOptimizer< HarmonySearchParameter, HarmonyGbestGuideStrategy >;
 
-    }    // namespace harmony_search
-}    // namespace mtst
+    }    // namespace hs_gbest_guide
+}    // namespace harmony_search
