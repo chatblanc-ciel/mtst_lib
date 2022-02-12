@@ -14,11 +14,10 @@
 #include <random>
 #include <string>
 #include <vector>
-
+namespace mtst{
 namespace firefly_algorithm
 {
-    namespace fa_default
-    {
+
         double dist_norm( const std::vector< double >&, const std::vector< double >& );    // 距離の計算(プロトタイプ宣言)
 
         struct FaParam
@@ -351,7 +350,7 @@ namespace firefly_algorithm
             FaOptimizer( FaParam parameter ): param( parameter ) {}
             virtual ~FaOptimizer() {}
         };
-    }    // namespace fa_default
 }    // namespace firefly_algorithm
+}
 
 #endif /* FA_DEFAULT_HPP_ */

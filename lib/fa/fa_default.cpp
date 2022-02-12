@@ -8,11 +8,9 @@
 
 #include "thread_pool.hpp"
 
-
+namespace mtst{
 namespace firefly_algorithm
 {
-    namespace fa_default
-    {
         FireFly::FireFly( std::vector< double > pos, double value, std::vector< double > vel, std::vector< double > best_pos, double best_value )
         {}
 
@@ -98,5 +96,5 @@ namespace firefly_algorithm
                 x.update();
             }
         }
-    }    // namespace fa_default
 }    // namespace firefly_algorithm
+}
