@@ -9,12 +9,10 @@
 #define INCLUDE_HARMONY_HARMONY_IMPROVED_HPP_
 
 #include "harmony_default.hpp"
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_improved
+    namespace harmony_search
     {
-        using namespace hs_default;
 
         struct HarmonyImprovedParameter: HarmonySearchParameter
         {
@@ -88,9 +86,9 @@ namespace harmony_search
 
             virtual HarmonyImprovedParameter& configure_update_ratio();
             virtual void update_parameter( std::size_t evals );
-        }
-    }    // namespace hs_improved
-}    // namespace harmony_search
+        };
+    }    // namespace harmony_search
+}    // namespace mtst
 
 
 #endif /* INCLUDE_HARMONY_HARMONY_IMPROVED_HPP_ */

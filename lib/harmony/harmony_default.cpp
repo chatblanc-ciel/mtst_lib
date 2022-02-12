@@ -6,11 +6,11 @@
  */
 
 #include "harmony/harmony_default.hpp"
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_default
+    namespace harmony_search
     {
+
         HarmonySearchStrategy::HarmonySearchStrategy(
             HarmonySearchParameter param,
             std::size_t dim,
@@ -168,5 +168,5 @@ namespace harmony_search
         // テンプレート組み合わせ宣言
         template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult >;
 
-    }    // namespace hs_default
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst

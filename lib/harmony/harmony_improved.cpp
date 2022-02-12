@@ -6,12 +6,10 @@
  */
 
 #include "harmony/harmony_improved.hpp"
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_improved
+    namespace harmony_search
     {
-        using namespace hs_default;
 
         HarmonyImprovedParameter& HarmonyImprovedParameter::configure_update_ratio()
         {
@@ -31,5 +29,5 @@ namespace harmony_search
             this->band_width_ = this->bw_update_ratio_ * static_cast< double >( evals );
             this->adjustment_ratio_ = this->bw_update_ratio_ * static_cast< double >( evals );
         }
-    }    // namespace hs_improved
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
