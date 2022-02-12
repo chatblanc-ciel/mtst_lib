@@ -8,8 +8,8 @@
 #ifndef INCLUDE_HARMONY_HPP_
 #define INCLUDE_HARMONY_HPP_
 
-
-
+#include "harmony/harmony_default.hpp"
+#include "harmony/harmony_improved.hpp"
 
 
 #endif /* INCLUDE_HARMONY_HPP_ */

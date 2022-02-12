@@ -6,6 +6,10 @@
 	],
 	"settings": {
 		"C_Cpp.default.includePath": [
+			"./include",
+			"./include/*"
+		],
+		"files.watcherInclude": [
 			"./include"
 		],
 		"cmake.generator": "MinGW Makefiles",
@@ -17,7 +21,7 @@
 		"clang-format.fallbackStyle": "WebKit",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"extensions.ignoreRecommendations": false
+		"extensions.ignoreRecommendations": false,
 	},
 	"extensions": {
 		"recommendations": [
