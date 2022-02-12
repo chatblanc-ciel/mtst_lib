@@ -17,9 +17,9 @@
 #include <string>
 #include <vector>
 
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_default
+    namespace harmony_search
     {
         /* # String format function
          *
@@ -248,8 +248,8 @@ namespace harmony_search
             virtual void post_act() override {}
             virtual void finalize() override {}
         };
-    }    // namespace hs_default
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
 
 
 #endif /* INCLUDE_HARMONY_DEFAULT_HPP_ */
