@@ -9,12 +9,11 @@
 #define INCLUDE_HARMONY_HARMONY_SELECTION_PRESSURE_HPP_
 
 #include "harmony_default.hpp"
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_selection_pressure
+    namespace harmony_search
     {
-        using namespace hs_default;
+
 
         struct HsGbestSelectionPressureStrategy: HarmonySearchStrategy
         {
@@ -40,8 +39,8 @@ namespace harmony_search
 
             using HarmonyOptimizer< P, S, R >::HarmonyOptimizer;
         };
-    }    // namespace hs_selection_pressure
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
 
 
 #endif /* INCLUDE_HARMONY_HARMONY_SELECTION_PRESSURE_HPP_ */

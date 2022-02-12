@@ -9,6 +9,7 @@
 
 
 using namespace std;
+using namespace mtst;
 
 void run_HsGbestSelectionPressureStrategy_construct();
 void run_HsGbestSelectionPressureStrategy_tune_harmony();
@@ -58,7 +59,7 @@ double sphere( const vector< double >& x )
  */
 void run_HsGbestSelectionPressureStrategy_construct()
 {
-    using namespace harmony_search::hs_selection_pressure;
+    using namespace harmony_search;
 
     // generate HarmonyStrategy
     auto strat = HsGbestSelectionPressureStrategy(
@@ -81,7 +82,7 @@ void run_HsGbestSelectionPressureStrategy_construct()
 void run_HsGbestSelectionPressureStrategy_tune_harmony()
 {
     using std::vector;
-    using namespace harmony_search::hs_selection_pressure;
+    using namespace harmony_search;
 
     // genereate defintive hamonies
     vector< Harmony > harmonies {
@@ -129,7 +130,7 @@ void run_HsGbestSelectionPressureStrategy_tune_harmony()
  */
 void run_HarmonyGbestSelectionPressureOptimizer_optimize()
 {
-    using namespace harmony_search::hs_selection_pressure;
+    using namespace harmony_search;
 
     HarmonyGbestSelectionPressureOptimizer<> optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
     auto result = optimizer.optimize( 10, sphere );

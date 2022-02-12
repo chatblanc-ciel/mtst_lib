@@ -16,10 +16,9 @@
 #include <random>
 #include <string>
 #include <vector>
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_default
+    namespace harmony_search
     {
         /* # String format function
          *
@@ -306,8 +305,8 @@ namespace harmony_search
             return result;
         }
 
-    }    // namespace hs_default
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
 
 
 #endif /* INCLUDE_HARMONY_DEFAULT_HPP_ */

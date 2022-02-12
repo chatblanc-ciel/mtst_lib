@@ -7,12 +7,10 @@
 
 #include "harmony/harmony_selection_pressure.hpp"
 
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_selection_pressure
+    namespace harmony_search
     {
-        using namespace hs_default;
-
         std::size_t HsGbestSelectionPressureStrategy::select_tune_harmony() const
         {
             thread_local std::random_device rnd;      // 非決定的な乱数生成器を生成
@@ -49,5 +47,5 @@ namespace harmony_search
         // テンプレート組み合わせ宣言
         template struct HarmonyGbestSelectionPressureOptimizer< HarmonySearchParameter, HsGbestSelectionPressureStrategy, HarmonyResult >;
 
-    }    // namespace hs_selection_pressure
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
