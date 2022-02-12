@@ -1,0 +1,9 @@
+[init]
+    defaultBranch = master
+[core]
+    excludesfile = C::/users/user.gitignore_global
+    editor = \"C::/users/userAppData\\Local\\Microsoft VS Code\\Code.exe\" --wait
+[rebase]
+    autostash = true
+[pull]
+    rebase = true
