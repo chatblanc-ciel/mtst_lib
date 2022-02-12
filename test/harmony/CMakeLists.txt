@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-# if you want to add sub directory.
-add_subdirectory(common)
-add_subdirectory(harmony)
-
+add_subdirectory(default)
+add_subdirectory(gbest_selection_pressure)
 
 # if you want to add test and test executable.
 # add_executable(sample-test-name source)
