@@ -9,13 +9,10 @@
 #define INCLUDE_HARMONY_GBEST_GUIDE_HPP_
 
 #include "harmony_default.hpp"
-
-namespace harmony_search
+namespace mtst
 {
-    namespace hs_gbest_guide
+    namespace harmony_search
     {
-        using namespace hs_default;
-
         struct HarmonyGbestGuideStrategy: HarmonySearchStrategy
         {
         protected:
@@ -38,8 +35,8 @@ namespace harmony_search
 
             using HarmonyOptimizer< P, S, R >::HarmonyOptimizer;
         };
-    }    // namespace hs_gbest_guide
-}    // namespace harmony_search
+    }    // namespace harmony_search
+}    // namespace mtst
 
 
 #endif /* INCLUDE_HARMONY_GBEST_GUIDE_HPP_ */
