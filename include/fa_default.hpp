@@ -8,6 +8,8 @@
 #ifndef FA_DEFAULT_HPP_
 #define FA_DEFAULT_HPP_
 
+#include "common.hpp"
+
 #include <algorithm>
 #include <chrono>
 #include <functional>
@@ -15,8 +17,8 @@
 #include <string>
 #include <vector>
 namespace mtst{
-namespace firefly_algorithm
-{
+    namespace firefly_algorithm
+    {
 
         double dist_norm( const std::vector< double >&, const std::vector< double >& );    // 距離の計算(プロトタイプ宣言)
 
@@ -221,6 +223,7 @@ namespace firefly_algorithm
         protected:
 
             FaParam param_;
+            std::size_t dim_;    // 次元数
             std::vector< double > dis_;
 
             // 内部パラメータ
@@ -233,7 +236,7 @@ namespace firefly_algorithm
             void update();    // 群のアップデート
         };
 
-        struct FaResult
+        struct FaResult: mtst_common::result::TraitResult
         {
         protected:
 
@@ -338,19 +341,50 @@ namespace firefly_algorithm
             }
         };
 
-        struct FaOptimizer
+        template< class P = FaParam, class S = FaStrat, class R = FaResult >
+        struct FaOptimizer: mtst_common::optimizer::TraitOptimizer< R >
         {
         protected:
 
-            FaParam param;
+            P param_;
 
         public:
 
             FaOptimizer() {}
-            FaOptimizer( FaParam parameter ): param( parameter ) {}
+            FaOptimizer( P param ): param_( param ) {}
             virtual ~FaOptimizer() {}
+
+            virtual R optimize( std::size_t, std::function< double( std::vector< double >& ) > ) override;
+
+            virtual void initialize() override {}
+            virtual void pre_act() override {}
+            virtual void post_act() override {}
+            virtual void finalize() override {}
         };
-}    // namespace firefly_algorithm
+
+        template< class P, class S, class R >
+        R FaOptimizer< P, S, R >::optimize( std::size_t dim, std::function< double( std::vector< double >& ) > obj_func )
+        {
+            using std::clock_t;
+            using std::vector;
+
+            // 実行時間計測開始
+            clock_t start = clock();
+
+            // 初期化アクション
+            this->initialize();
+            S strat( this->param_, dim, obj_func );
+
+            // 結果記録用
+            vector< double > update_curve;
+            update_curve.reserve( strat.param_ref().t_max() );
+
+            for ( std::size_t t = 0, m_evals = strat.param_ref().t_max(); t < m_evals; ++t )
+            {
+
+            }
+        }
+    }    // namespace firefly_algorithm
 }
 
 #endif /* FA_DEFAULT_HPP_ */
