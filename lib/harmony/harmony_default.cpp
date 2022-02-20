@@ -207,8 +207,5 @@ namespace mtst
             return vals;
         }
 
-        // Explicit Instantiation
-        // テンプレート組み合わせ宣言
-        template struct HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult >;
     }    // namespace harmony_search
 }    // namespace mtst
