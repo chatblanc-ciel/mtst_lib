@@ -80,7 +80,7 @@ void run_HarmonyOptimizer_optimize()
         return value;
     };
 
-    HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy, HarmonyResult > optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
+    HarmonyOptimizer< HarmonySearchParameter, HarmonySearchStrategy > optimizer( HarmonySearchParameter().set_max_evals( 3000 ) );
     auto result = optimizer.optimize( 10, obj_func );
 
     printf( "value %.15f\n", result.value() );
