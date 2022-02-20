@@ -10,7 +10,11 @@ namespace mtst
 {
     namespace harmony_search
     {
-
+        /* # HarmonySearchStrategy
+         *
+         * ハーモニーサーチのアルゴリズムをまとめている関数
+         *
+         */
         HarmonySearchStrategy::HarmonySearchStrategy(
             HarmonySearchParameter param,
             std::size_t dim,
@@ -62,6 +66,11 @@ namespace mtst
               harmonies_( harmonies )
         {}
 
+        /* # best_harmony
+         *
+         * ハーモニーメモリ内の最良ハーモニーを見つける関数
+         *
+         */
         std::size_t HarmonySearchStrategy::best_harmony() const
         {
             auto minimam = std::min_element( this->harmonies_.begin(), this->harmonies_.end(), [this]( const Harmony& h1, const Harmony& h2 )
@@ -69,6 +78,11 @@ namespace mtst
             return std::distance( this->harmonies_.begin(), minimam );
         }
 
+        /* # worst_harmony
+         *
+         * ハーモニーメモリ内の最悪ハーモニーを見つける関数
+         *
+         */
         std::size_t HarmonySearchStrategy::worst_harmony() const
         {
             auto maximam = std::max_element( this->harmonies_.begin(), this->harmonies_.end(), [this]( const Harmony& h1, const Harmony& h2 )
@@ -76,6 +90,12 @@ namespace mtst
             return std::distance( this->harmonies_.begin(), maximam );
         }
 
+        /* # trade_harmony
+         *
+         * 新しく生成したハーモニーと最悪ハーモニーを比較して
+         * 最悪ハーモニーより新しく生成したハーモニーが良い値だった時
+         * 記憶するハーモニーを入れ替える関数
+         */
         void HarmonySearchStrategy::trade_harmony( Harmony new_harmony )
         {
             std::size_t index = this->worst_harmony();
@@ -86,6 +106,12 @@ namespace mtst
             }
         }
 
+        /* # generate_tuning_harmony
+         *
+         * 既存ハーモニーを用いる場合の
+         * 新しいハーモニーを生成する関数
+         *
+         */
         Harmony HarmonySearchStrategy::generate_tuning_harmony( const std::size_t index ) const
         {
             using std::uniform_real_distribution;
@@ -115,6 +141,12 @@ namespace mtst
             return Harmony( this->obj_func_( new_harmony_vals ), new_harmony_vals );
         }
 
+        /* # generate_harmony
+         *
+         * 選択比率Raを用いて
+         * 新しいハーモニーを生成する関数
+         *
+         */
         Harmony HarmonySearchStrategy::generate_harmony() const
         {
             using std::uniform_real_distribution;
@@ -137,7 +169,12 @@ namespace mtst
             }
         }
 
-
+        /* # select_tune_harmony
+         *
+         * 新しいハーモニーを生成する際に利用する
+         * 既存ハーモニーの番号をランダムに決定する関数
+         *
+         */
         std::size_t HarmonySearchStrategy::select_tune_harmony() const
         {
             thread_local std::random_device rnd;      // 非決定的な乱数生成器を生成
@@ -147,6 +184,12 @@ namespace mtst
             return select_range( mt );
         }
 
+        /* # gen_rng_vals
+         *
+         * -3から3の間の一様乱数を作る関数
+         * rangeを追加した場合、rangeの絶対値の範囲内で一様乱数を生成する
+         *
+         */
         std::vector< double > HarmonySearchStrategy::gen_rng_vals( std::size_t dim )
         {
             return HarmonySearchStrategy::gen_rng_vals( dim, 3.0 );
