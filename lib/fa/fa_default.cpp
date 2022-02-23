@@ -8,9 +8,10 @@
 
 #include "thread_pool.hpp"
 
-namespace mtst{
-namespace firefly_algorithm
+namespace mtst
 {
+    namespace firefly_algorithm
+    {
         FireFly::FireFly( std::vector< double > pos, double value, std::vector< double > vel, std::vector< double > best_pos, double best_value )
         {}
 
@@ -89,12 +90,27 @@ namespace firefly_algorithm
             }
         }
 
-        void FaStrat::update()
+        void FaStrat::all_fireflies_transfer() // 全個体の位置更新
+        {
+            for(unsigned int i = 0; i < this->fireflies_.size(); i++)
+            {
+                this->fireflies_.at(i).transfer();
+            }
+        }
+
+        void FaStrat::swarm_update()
         {
             for ( auto& x : fireflies_ )
             {
                 x.update();
             }
         }
-}    // namespace firefly_algorithm
+
+        std::size_t FaStrat::best_firefly() const
+        {
+            auto minimam = std::min_element( this->fireflies_.begin(), this->fireflies_.end(), [this]( const FireFly& f1, const FireFly& f2 )
+                                             { return f1.value() < f2.value(); } );
+            return std::distance( this->fireflies_.begin(), minimam );
+        }
+    }    // namespace firefly_algorithm
 }
