@@ -17,7 +17,10 @@
 		"clang-format.fallbackStyle": "WebKit",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"extensions.ignoreRecommendations": false
+		"extensions.ignoreRecommendations": false,
+		"files.associations": {
+			"random": "cpp"
+		}
 	},
 	"extensions": {
 		"recommendations": [
