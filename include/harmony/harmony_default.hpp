@@ -34,6 +34,13 @@ namespace mtst
             return std::string( &buf[0], &buf[0] + len );
         }
 
+
+        /* # 構造体 Harmony
+         *
+         * ハーモニーサーチのハーモニーを管理している構造体
+         * この構造体からハーモニーを持ってきて、ハーモニーサーチを行う
+         *
+         */
         struct Harmony
         {
         protected:
@@ -67,6 +74,12 @@ namespace mtst
             }
         };
 
+        /* # 構造体 HarmonySearchParameter
+         *
+         * ハーモニーサーチのパラメータを管理している構造体
+         * この構造体からRp,Ra,Bw等のパラメータ変更を行う
+         *
+         */
         struct HarmonySearchParameter
         {
         protected:
@@ -132,6 +145,12 @@ namespace mtst
             }
         };
 
+        /* # 構造体 HarmonySearchStrategy
+         *
+         * ハーモニーサーチアルゴリズムを管理している構造体
+         * この構造体で最良ハーモニーやハーモニーの比較を行う
+         *
+         */
         struct HarmonySearchStrategy
         {
         protected:
@@ -201,6 +220,13 @@ namespace mtst
             static std::vector< double > gen_rng_vals( std::size_t, double );
         };
 
+        /* # 構造体 HarmonyResult
+         *
+         * ハーモニーサーチの結果をまとめる構造体
+         * TraitResultを継承している
+         * 結果をcsvファイルに保存する
+         *
+         */
         struct HarmonyResult: mtst_common::result::TraitResult
         {
         protected:

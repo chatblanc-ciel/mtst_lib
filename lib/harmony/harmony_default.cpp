@@ -12,7 +12,7 @@ namespace mtst
     {
         /* # HarmonySearchStrategy
          *
-         * ハーモニーサーチのアルゴリズムをまとめている実行させる関数
+         * ハーモニーサーチのアルゴリズムをまとめる関数
          *
          */
         HarmonySearchStrategy::HarmonySearchStrategy(
