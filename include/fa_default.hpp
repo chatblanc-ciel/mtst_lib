@@ -31,75 +31,6 @@ namespace mtst{
             return std::string( &buf[0], &buf[0] + len );
         }
 
-        struct FireFly
-        {
-        protected:
-
-            std::vector< double > pos_;
-            double value_;
-            std::vector< double > vel_;
-
-            std::vector< double > best_pos_;
-            double best_value_;
-
-        public:
-
-            FireFly( std::vector< double >, double, std::vector< double >, std::vector< double >, double );
-            virtual ~FireFly();
-
-            std::vector< double > pos() const
-            {
-                return pos_;
-            }
-            double value() const
-            {
-                return value_;
-            }
-            std::vector< double > vel() const
-            {
-                return vel_;
-            }
-            std::vector< double > best_pos() const
-            {
-                return best_pos_;
-            }
-            double best_value() const
-            {
-                return best_value_;
-            }
-
-            FireFly& set_pos( std::vector< double > input )
-            {
-                pos_ = input;
-                return *this;
-            }
-            FireFly& set_value( double input )
-            {
-                value_ = input;
-                return *this;
-            }
-            FireFly& set_vel( std::vector< double > input )
-            {
-                vel_ = input;
-                return *this;
-            }
-            FireFly& set_best_pos( std::vector< double > input )
-            {
-                best_pos_ = input;
-                return *this;
-            }
-            FireFly& set_best_value( double input )
-            {
-                best_value_ = input;
-                return *this;
-            }
-
-            void update();    // 良い値に更新
-            void force_update();    // 強制的に更新
-
-            void transfer();
-            void modify_vel( FireFly&, double, FaParam& );    // FireFly&...一個体の情報、double...dis(二個体間の距離)
-        };
 
         struct FaParam
         {
@@ -217,6 +148,77 @@ namespace mtst{
         };
 
 
+        struct FireFly
+        {
+        protected:
+
+            std::vector< double > pos_;
+            double value_;
+            std::vector< double > vel_;
+
+            std::vector< double > best_pos_;
+            double best_value_;
+
+        public:
+
+            FireFly( std::vector< double >, double, std::vector< double >, std::vector< double >, double );
+            virtual ~FireFly();
+
+            std::vector< double > pos() const
+            {
+                return pos_;
+            }
+            double value() const
+            {
+                return value_;
+            }
+            std::vector< double > vel() const
+            {
+                return vel_;
+            }
+            std::vector< double > best_pos() const
+            {
+                return best_pos_;
+            }
+            double best_value() const
+            {
+                return best_value_;
+            }
+
+            FireFly& set_pos( std::vector< double > input )
+            {
+                pos_ = input;
+                return *this;
+            }
+            FireFly& set_value( double input )
+            {
+                value_ = input;
+                return *this;
+            }
+            FireFly& set_vel( std::vector< double > input )
+            {
+                vel_ = input;
+                return *this;
+            }
+            FireFly& set_best_pos( std::vector< double > input )
+            {
+                best_pos_ = input;
+                return *this;
+            }
+            FireFly& set_best_value( double input )
+            {
+                best_value_ = input;
+                return *this;
+            }
+
+            void update();    // 最良値よりさらに良い値が出た際の更新操作
+            void force_update();    // 初期位置生成で強制的に行う際の更新操作
+
+            void transfer();
+            void modify_vel( FireFly&, double, FaParam& );    // FireFly&...一個体の情報、double...dis(二個体間の距離)
+        };
+
+
         struct FaStrat
         {
         protected:
@@ -230,6 +232,8 @@ namespace mtst{
             std::vector< FireFly > fireflies_;
 
         public:
+
+            virtual ~FaStrat() {}
 
             void calc_dist();    // calc_dist(void)...引数は省略可能
             void all_fireflies_modify(); // 全個体の速度更新
@@ -320,13 +324,17 @@ namespace mtst{
                 // 更新前アクション
                 this->pre_act();
 
+                // 個体間距離計算
                 auto new_fireflies_dis = strat.calc_dist();
 
-                auto new_fireflies = strat.all_fireflies_modify(new_fireflies_dis);
+                // 速度更新
+                strat.all_fireflies_modify(new_fireflies_dis);
 
-                strat.all_fireflies_transfer(new_fireflies);
+                // 個体移動
+                strat.all_fireflies_transfer();
 
-                strat.update(new_fireflies);
+                // 群のbest更新
+                strat.update();
 
                 std::size_t best_index = strat.best_firefly();
                 update_curve.emplace_back( strat.fireflies_ref().at( best_index ).value() );
