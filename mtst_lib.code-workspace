@@ -13,11 +13,11 @@
 			"-DDEVELOP_EXECUTABLE_mtst_lib=ON"
 		],
 		"editor.defaultFormatter": "xaver.clang-format",
-		"C_Cpp.clang_format_fallbackStyle": "WebKit",
-		"clang-format.fallbackStyle": "WebKit",
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"extensions.ignoreRecommendations": false
+		"extensions.ignoreRecommendations": false,
+		"C_Cpp.clang_format_fallbackStyle": "WebKit",
+		"clang-format.fallbackStyle": "WebKit"
 	},
 	"extensions": {
 		"recommendations": [

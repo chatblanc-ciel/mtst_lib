@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.16)
 # `tmp.code-workspace` needs to be changed as well.
 project(mtst_lib CXX)
 
-cmake_minimum_required(VERSION 3.16)
 
 #--------------- CMake compile config ------------------------------
 enable_language(CXX)
